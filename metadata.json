@@ -1,0 +1,8 @@
+{
+  "name": "Carrier Hugging Face Plugin",
+  "version": "0.1",
+  "module": "plugins.hugging_face",
+  "extract": false,
+  "depends_on": ["integrations"],
+  "init_after": []
+}
