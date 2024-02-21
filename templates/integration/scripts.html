@@ -1,2 +1,3 @@
 {% set integration_name = 'hugging_face' %}
+<script src="{{ url_for('%s.static' | format(integration_name), filename='js/HuggingFaceModelsButton.js') }}"></script>
 <script src="{{ url_for('%s.static' | format(integration_name), filename='js/integrations.js') }}"></script>

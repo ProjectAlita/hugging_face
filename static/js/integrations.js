@@ -2,6 +2,9 @@ const HuggingFaceIntegrationModal = {
     delimiters: ['[[', ']]'],
     props: ['instance_name', 'display_name', 'logo_src', 'section_name'],
     emits: ['update'],
+    components: {
+        'hugging-face-models-button': HuggingFaceModelsButton,
+    },
     template: `
 <div
         :id="modal_id"
@@ -29,6 +32,19 @@ const HuggingFaceIntegrationModal = {
                  />
                 <div class="invalid-feedback">[[ error.api_token ]]</div>
             </div>
+            <div>
+                <span class="font-h5 font-semibold">Models:</span>
+            </div>
+            <div class="invalid-feedback d-block">[[ error.models ]]</div>
+            <hugging-face-models-button
+                    ref="HuggingFaceModelsButton"
+                    :pluginName="pluginName"
+                    :error="error.check_connection"
+                    :body_data="body_data"
+                    v-model:models="models"
+                    @handleError="handleError"
+            >
+            </hugging-face-models-button>
         </template>
         <template #footer>
             <test-connection-button
@@ -84,6 +100,7 @@ const HuggingFaceIntegrationModal = {
     methods: {
         clear() {
             Object.assign(this.$data, this.initialState())
+            this.$refs.HuggingFaceModelsButton.clear();
         },
         load(stateData) {
             Object.assign(this.$data, stateData)
