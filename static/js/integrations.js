@@ -75,6 +75,7 @@ const HuggingFaceIntegrationModal = {
         body_data() {
             const {
                 api_token,
+                models,
                 project_id,
                 config,
                 is_default,
@@ -83,6 +84,7 @@ const HuggingFaceIntegrationModal = {
             } = this
             if (api_token.value == '') {
                 return {
+                    models,
                     project_id,
                     config,
                     is_default,
@@ -92,6 +94,7 @@ const HuggingFaceIntegrationModal = {
             }
             return {
                 api_token,
+                models,
                 project_id,
                 config,
                 is_default,
