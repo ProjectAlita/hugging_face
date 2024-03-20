@@ -197,6 +197,7 @@ const HuggingFaceIntegrationModal = {
         initialState: () => ({
             modal_style: {'height': '100px', 'border': ''},
             api_token: "",
+            models: [],
             is_default: false,
             is_fetching: false,
             config: {},
