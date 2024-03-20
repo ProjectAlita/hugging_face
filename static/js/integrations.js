@@ -81,6 +81,15 @@ const HuggingFaceIntegrationModal = {
                 status,
                 mode
             } = this
+            if (api_token.value == '') {
+                return {
+                    project_id,
+                    config,
+                    is_default,
+                    status,
+                    mode
+                }
+            }
             return {
                 api_token,
                 project_id,
