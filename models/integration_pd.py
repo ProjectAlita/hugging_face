@@ -2,10 +2,9 @@ from typing import List, Optional
 
 from pydantic import BaseModel
 
-from tools import session_project, rpc_tools, VaultClient
+from tools import session_project, rpc_tools, VaultClient, worker_client, this
 from pylon.core.tools import log
 from ...integrations.models.pd.integration import SecretField
-from huggingface_hub import login, logout
 
 
 class CapabilitiesModel(BaseModel):
@@ -28,16 +27,18 @@ class IntegrationModel(BaseModel):
     def check_connection(self, project_id=None):
         if not project_id:
             project_id = session_project.get()
-        token = self.api_token.unsecret(project_id)
-        log.info(f"Checking connection with token {token}")
-        try:
-            login(token=token, new_session=True)
-        except ValueError:
-            log.error("Invalid token")
-            return "Invalid token"
-        finally:
-            logout()
-        return True
+        #
+        settings = {}
+        #
+        if self.api_token:
+            settings["token"] = self.api_token.unsecret(project_id)
+        else:
+            settings["token"] = None
+        #
+        return worker_client.ai_check_settings(
+            integration_name=this.module_name,
+            settings=settings,
+        )
 
     def refresh_models(self, project_id):
         integration_name = 'hugging_face'

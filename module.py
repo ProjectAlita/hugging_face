@@ -19,6 +19,8 @@
 from pylon.core.tools import log  # pylint: disable=E0611,E0401
 from pylon.core.tools import module  # pylint: disable=E0611,E0401
 
+from tools import worker_client  # pylint: disable=E0611,E0401
+
 from .models.integration_pd import IntegrationModel
 
 
@@ -33,13 +35,9 @@ class Module(module.ModuleModel):
         """ Init module """
         log.info('Initializing AI module')
         SECTION_NAME = 'ai'
-
-        self.descriptor.init_blueprint()
-        self.descriptor.init_slots()
-        self.descriptor.init_rpcs()
-        self.descriptor.init_events()
-        self.descriptor.init_api()
-
+        #
+        self.descriptor.init_all()
+        #
         self.context.rpc_manager.call.integrations_register_section(
             name=SECTION_NAME,
             integration_description='Manage ai integrations',
@@ -49,7 +47,28 @@ class Module(module.ModuleModel):
             section=SECTION_NAME,
             settings_model=IntegrationModel,
         )
+        #
+        worker_client.register_integration(
+            integration_name=self.descriptor.name,
+            #
+            ai_check_settings_callback=self.ai_check_settings,
+            ai_get_models_callback=self.ai_get_models,
+            ai_count_tokens_callback=None,
+            #
+            llm_invoke_callback=None,
+            llm_stream_callback=None,
+            #
+            chat_model_invoke_callback=None,
+            chat_model_stream_callback=None,
+            #
+            embed_documents_callback=None,
+            embed_query_callback=None,
+            #
+            indexer_config_callback=self.indexer_config,
+        )
 
     def deinit(self):  # pylint: disable=R0201
         """ De-init module """
         log.info('De-initializing')
+        #
+        self.descriptor.deinit_all()
