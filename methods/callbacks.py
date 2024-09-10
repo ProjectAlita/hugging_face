@@ -99,12 +99,6 @@ class Method:  # pylint: disable=E1101,R0903,W0201
             "embedding_model": "HuggingFaceEmbeddings",
             "embedding_model_params": {
                 "model_name": model,
-                "model_kwargs": {
-                    "device": "cpu",
-                },
-                "encode_kwargs": {
-                    "normalize_embeddings": False,
-                },
             },
         }
         #
