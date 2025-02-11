@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from pydantic import BaseModel
+from pydantic.v1 import BaseModel
 
 from tools import session_project, rpc_tools, VaultClient, worker_client, this
 from pylon.core.tools import log
