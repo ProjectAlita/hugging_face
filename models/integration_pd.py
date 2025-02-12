@@ -2,9 +2,8 @@ from typing import List, Optional
 
 from pydantic.v1 import BaseModel
 
-from tools import session_project, rpc_tools, VaultClient, worker_client, this
+from tools import session_project, rpc_tools, VaultClient, worker_client, this, SecretString
 from pylon.core.tools import log
-from ...integrations.models.pd.integration import SecretField
 
 
 class CapabilitiesModel(BaseModel):
@@ -20,7 +19,7 @@ class AIModel(BaseModel):
 
 
 class IntegrationModel(BaseModel):
-    api_token: Optional[SecretField | str]
+    api_token: Optional[SecretString | str]
     model_name: str = 'sentence-transformers/all-mpnet-base-v2'
     models: List[AIModel] = []
 

@@ -3,7 +3,6 @@ from pylon.core.tools import web, log
 from tools import rpc_tools, worker_client, this
 
 from ..models.integration_pd import AIModel
-from ...integrations.models.pd.integration import SecretField
 
 
 class RPC:
